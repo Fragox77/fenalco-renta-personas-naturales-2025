@@ -19,7 +19,7 @@ Stack de ejemplo: **Node.js + Express**, pero la lógica aplica a cualquier leng
 PAYU_MERCHANT_ID=508029          # público
 PAYU_ACCOUNT_ID=512321           # público (Colombia COP)
 PAYU_API_KEY=4Vj8eK4rloUd272L48hsrarnUA   # ⚠️ SECRETA (sandbox de ejemplo)
-PAYU_API_LOGIN=pRRXKOl8ikMmt9u   # secreta
+PAYU_API_LOGIN=pRRXKOl8ikMmt9u   # ⚠️ SECRETA (sandbox de ejemplo)
 PAYU_TEST=1                      # 1 sandbox · 0 producción
 
 SMTP_HOST=...
