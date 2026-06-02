@@ -31,7 +31,7 @@ export default function Learning() {
             o una plantilla descargable lista para usar.
           </p>
 
-          <div className="glass mt-6 p-5 flex items-center gap-4">
+          <div className="glass mt-6 p-5 flex items-center gap-4 premium-card">
             <svg width="48" height="48" viewBox="0 0 48 48">
               <circle cx="24" cy="24" r="19" stroke="rgba(255,255,255,0.10)" strokeWidth="5" fill="none" />
               <circle cx="24" cy="24" r="19" stroke="#00CE7C" strokeWidth="5" fill="none"
@@ -40,8 +40,8 @@ export default function Learning() {
               <text x="24" y="28" textAnchor="middle" className="font-display" fontWeight="700" fontSize="13" fill="#fff">92%</text>
             </svg>
             <div>
-              <div className="font-display font-bold text-sm text-white">Aplicable inmediatamente</div>
-              <div className="text-xs text-white/60">Encuesta post-taller 2024</div>
+              <div className="font-display font-bold text-sm text-white card-copy">Aplicable inmediatamente</div>
+              <div className="text-xs text-white/60 card-copy">Encuesta post-taller 2024</div>
             </div>
           </div>
         </div>
@@ -51,8 +51,8 @@ export default function Learning() {
           {TOPICS.map(m => (
             <div key={m.tag}
                  className={m.highlight
-                   ? 'p-5 lg:p-6 rounded-3xl grid items-center gap-4 lg:gap-6'
-                   : 'glass p-5 lg:p-6 grid items-center gap-4 lg:gap-6'}
+                   ? 'p-5 lg:p-6 rounded-3xl grid items-center gap-4 lg:gap-6 premium-card'
+                   : 'glass p-5 lg:p-6 grid items-center gap-4 lg:gap-6 premium-card'}
                  style={{
                    gridTemplateColumns: '48px 1fr auto',
                    ...(m.highlight && {
@@ -68,10 +68,10 @@ export default function Learning() {
                 {m.tag}
               </div>
               <div>
-                <div className="font-display font-bold text-[17px] lg:text-[19px] text-white tracking-tight">{m.t}</div>
-                <div className="text-[13px] text-white/65 mt-1 leading-snug">{m.d}</div>
+                <div className="font-display font-bold text-[17px] lg:text-[19px] text-white tracking-tight card-copy">{m.t}</div>
+                <div className="text-[13px] text-white/65 mt-1 leading-snug card-copy">{m.d}</div>
               </div>
-              <div className={`font-mono text-[12px] tracking-wide ${m.highlight ? 'text-fen-green' : 'text-white/50'}`}>{m.h}</div>
+              <div className={`font-mono text-[12px] tracking-wide card-copy ${m.highlight ? 'text-fen-green' : 'text-white/50'}`}>{m.h}</div>
             </div>
           ))}
         </div>

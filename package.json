@@ -6,6 +6,7 @@
   "description": "Landing page · Seminario-Taller Renta Personas Naturales 2025 — Fenalco Santander",
   "scripts": {
     "dev": "vite",
+    "dev:vscode": "vite --host --port 4173",
     "build": "vite build",
     "preview": "vite preview --host"
   },

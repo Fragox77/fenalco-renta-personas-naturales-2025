@@ -32,7 +32,7 @@ export default function Benefits() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {BENEFITS.map(b => (
-            <div key={b.n} className="glass-hi p-6 flex flex-col gap-3">
+            <div key={b.n} className="glass-hi p-6 flex flex-col gap-3 premium-card">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] text-fen-teal tracking-[0.16em]">{b.n}</span>
                 <div className="w-9 h-9 rounded-xl grid place-items-center"
@@ -40,8 +40,8 @@ export default function Benefits() {
                   <svg width="16" height="16" viewBox="0 0 16 16">{b.icon}</svg>
                 </div>
               </div>
-              <div className="font-display font-bold text-[22px] text-white tracking-tight">{b.t}</div>
-              <p className="text-[13.5px] text-white/70 leading-relaxed m-0">{b.d}</p>
+              <div className="font-display font-bold text-[22px] text-white tracking-tight card-copy">{b.t}</div>
+              <p className="text-[13.5px] text-white/70 leading-relaxed m-0 card-copy">{b.d}</p>
             </div>
           ))}
         </div>

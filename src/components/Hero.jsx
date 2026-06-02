@@ -47,20 +47,20 @@ function Form210Card() {
     ['98', 'Impuesto a cargo', '$ 14.205.000'],
   ];
   return (
-    <div className="rounded-2xl p-4 font-mono text-[10px] text-white/70"
+    <div className="rounded-2xl p-4 font-mono text-[10px] text-white/70 premium-card"
          style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
                   border: '1px solid rgba(255,255,255,0.10)' }}>
       <div className="flex justify-between mb-2.5">
-        <span className="text-fen-teal tracking-[0.12em]">DIAN · FORM. 210</span>
-        <span>AÑO 2025</span>
+        <span className="text-fen-teal tracking-[0.12em] card-copy">DIAN · FORM. 210</span>
+        <span className="card-copy">AÑO 2025</span>
       </div>
       {rows.map(([n, l, v], i) => (
         <div key={n} className="grid gap-2.5 py-2"
              style={{ gridTemplateColumns: '28px 1fr auto',
                       borderTop: i === 0 ? '1px solid rgba(255,255,255,0.10)' : '1px dashed rgba(255,255,255,0.08)' }}>
           <span className="text-white/40">{n}</span>
-          <span className="font-body text-white/80">{l}</span>
-          <span className={i === 3 ? 'text-fen-green font-bold' : 'text-white'}>{v}</span>
+          <span className="font-body text-white/80 card-copy">{l}</span>
+          <span className={`${i === 3 ? 'text-fen-green font-bold' : 'text-white'} card-copy`}>{v}</span>
         </div>
       ))}
     </div>
@@ -87,9 +87,10 @@ export default function Hero() {
             <span className="badge teal"><span className="dot" style={{ background: '#20D5C4', boxShadow: '0 0 12px #20D5C4' }} />Ley 2277 · DIAN</span>
           </div>
 
-          <h1 className="h-display text-5xl sm:text-6xl lg:text-[88px] text-white">
-            La DIAN<br />no perdona<br />
-            <span className="grad-text">errores.</span>
+          <h1 className="h-display text-5xl sm:text-6xl lg:text-[88px] text-white hero-title">
+            <span className="hero-type-line hero-type-line-1" style={{ '--chars': 7, '--duration': '1.05s', '--delay': '0.2s', '--final-width': '6.35ch' }}>La DIAN</span><br />
+            <span className="hero-type-line hero-type-line-2" style={{ '--chars': 10, '--duration': '1.3s', '--delay': '1.35s', '--final-width': '9.15ch' }}>no perdona</span><br />
+            <span className="grad-text hero-type-line hero-type-line-3" style={{ '--chars': 8, '--duration': '1.05s', '--delay': '2.75s', '--final-width': '6.05ch' }}>errores.</span>
           </h1>
 
           <p className="text-white/70 text-lg leading-relaxed max-w-xl">
@@ -149,11 +150,11 @@ export default function Hero() {
                         filter: 'blur(40px)', opacity: 0.55 }} />
 
           {/* portrait */}
-          <div className="absolute right-0 top-0 w-[320px] lg:w-[340px] h-[460px] lg:h-[520px] z-10 rounded-3xl overflow-hidden"
+          <div className="absolute right-0 top-0 w-[320px] lg:w-[340px] h-[460px] lg:h-[520px] z-10 rounded-3xl overflow-hidden speaker-portrait-shell"
                style={{ background: 'linear-gradient(180deg, #11304F, #07172B)',
                         boxShadow: '0 40px 80px -20px rgba(0,0,0,0.6)',
                         border: '1px solid rgba(255,255,255,0.10)' }}>
-            <img src={cesarPhoto} alt="Cesar Ánzola Aguilar" className="absolute inset-0 w-full h-full object-cover object-top" />
+            <img src={cesarPhoto} alt="Cesar Ánzola Aguilar" className="absolute inset-0 w-full h-full object-cover object-top speaker-portrait-img" />
             <div className="absolute inset-0 pointer-events-none"
                  style={{ background: 'linear-gradient(180deg, transparent 45%, rgba(5,11,22,0.94) 100%)' }} />
             <div className="absolute left-4 right-4 bottom-4 flex flex-col gap-1.5">
@@ -164,26 +165,26 @@ export default function Hero() {
           </div>
 
           {/* dashboard card · top-left (clear of photo) */}
-          <div className="glass-hi absolute left-0 top-6 w-[260px] p-4 z-20" style={{ boxShadow: '0 30px 60px -20px rgba(0,0,0,0.6)' }}>
+          <div className="glass-hi absolute left-0 top-6 w-[260px] p-4 z-20 hero-card-motion hero-card-motion-a premium-card" style={{ boxShadow: '0 30px 60px -20px rgba(0,0,0,0.6)' }}>
             <div className="flex justify-between mb-2">
               <span className="eyebrow !text-[10px]">Renta líquida cedular</span>
               <span className="chip">2025</span>
             </div>
-            <div className="font-display font-bold text-[26px] tracking-tight text-white">$ 86.420.000</div>
-            <div className="font-mono text-[11px] text-fen-green mb-2">▲ 12.4% vs. AÑO 2024</div>
+            <div className="font-display font-bold text-[26px] tracking-tight text-white card-copy">$ 86.420.000</div>
+            <div className="font-mono text-[11px] text-fen-green mb-2 card-copy">▲ 12.4% vs. AÑO 2024</div>
             <Sparkline width={228} height={48} />
           </div>
 
           {/* form 210 · bottom-left (clear of photo, no rotation) */}
-          <div className="absolute left-0 top-[220px] w-[280px] z-20">
+          <div className="absolute left-0 top-[220px] w-[280px] z-20 hero-card-motion hero-card-motion-b">
             <Form210Card />
           </div>
         </div>
 
         {/* MOBILE portrait */}
-        <div className="md:hidden relative rounded-3xl overflow-hidden h-[440px]"
+        <div className="md:hidden relative rounded-3xl overflow-hidden h-[440px] speaker-portrait-shell"
              style={{ background: 'linear-gradient(180deg, #11304F, #07172B)' }}>
-          <img src={cesarPhoto} alt="Cesar Ánzola Aguilar" className="absolute inset-0 w-full h-full object-cover object-top" />
+          <img src={cesarPhoto} alt="Cesar Ánzola Aguilar" className="absolute inset-0 w-full h-full object-cover object-top speaker-portrait-img" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(5,11,22,0.92))' }} />
           <div className="absolute left-4 bottom-4">
             <span className="badge green w-fit"><span className="dot" />Docente</span>

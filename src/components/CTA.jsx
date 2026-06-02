@@ -2,7 +2,7 @@ export default function CTA() {
   return (
     <section id="cta" className="relative py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="relative overflow-hidden rounded-[28px] p-8 lg:p-14"
+        <div className="relative overflow-hidden rounded-[28px] p-8 lg:p-14 premium-card"
              style={{ background: 'linear-gradient(120deg, #280071 0%, #1A0049 60%, #0C2340 100%)',
                       border: '1px solid rgba(255,255,255,0.10)' }}>
           <div className="absolute inset-0 grid-overlay opacity-50 pointer-events-none" />
