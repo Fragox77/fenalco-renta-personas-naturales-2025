@@ -189,3 +189,28 @@ async function enviarCorreoConfirmacion(referenceCode) {
 ---
 
 Referencia oficial: [PayU LATAM — WebCheckout](https://developers.payulatam.com/latam/es/docs/integrations/webcheckout-integration.html)
+
+## Dia 1-2: validacion de credenciales y endpoints oficiales
+
+Antes de activar produccion, valida consistencia de entorno con:
+
+```bash
+npm run validate:payu
+```
+
+El validador revisa:
+
+- Variables obligatorias: `PAYU_MERCHANT_ID`, `PAYU_ACCOUNT_ID`, `PAYU_API_KEY`, `PAYU_API_LOGIN`, `PAYU_TEST`
+- Coherencia de `PAYU_ACTION_URL` con el entorno:
+  - Sandbox (`PAYU_TEST=1`): `https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/`
+  - Produccion (`PAYU_TEST=0`): `https://checkout.payulatam.com/ppp-web-gateway-payu/`
+- Que produccion no use IDs de sandbox
+- URLs HTTPS para `PAYU_RESPONSE_URL` y `PAYU_CONFIRMATION_URL` en produccion
+
+Variables opcionales recomendadas para chequeo completo:
+
+```bash
+PAYU_ACTION_URL=
+PAYU_RESPONSE_URL=
+PAYU_CONFIRMATION_URL=
+```
