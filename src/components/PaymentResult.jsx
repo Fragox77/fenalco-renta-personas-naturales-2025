@@ -1,23 +1,18 @@
 import { EVENT } from '../config.js';
 
 /**
- * Página de resultado de PayU (responseUrl → #/resultado).
- * PayU regresa parámetros en la URL: transactionState, polTransactionState,
- * referenceCode, TX_VALUE, etc. Mapeamos transactionState:
- *   4 = aprobada · 7 = pendiente · 6/104 = rechazada/error
+ * Página de resultado de Rapyd (complete/error_payment_url → #/resultado).
+ * El CRM añade ?status=success|error&ref=RPN25-xxx a la URL de retorno.
  */
 function parseParams() {
   const q = new URLSearchParams(window.location.search);
-  // PayU puede devolver en query o tras el hash; soportamos ambos
   const hashQ = window.location.hash.includes('?')
     ? new URLSearchParams(window.location.hash.split('?')[1])
     : new URLSearchParams();
   const get = k => q.get(k) || hashQ.get(k);
   return {
-    state: get('transactionState'),
-    ref: get('referenceCode'),
-    value: get('TX_VALUE'),
-    email: get('buyerEmail'),
+    status: get('status'), // 'success' | 'error'
+    ref:    get('ref'),    // referenceId del CRM (ej. RPN25-1234-ABC)
   };
 }
 
@@ -29,13 +24,6 @@ const VARIANTS = {
     title: '¡Tu cupo está confirmado!',
     msg: 'Recibimos tu pago correctamente. En unos minutos llegará a tu correo la confirmación de inscripción con todos los detalles del seminario.',
   },
-  pending: {
-    color: '#20D5C4', tone: 'rgba(32,213,196',
-    icon: <><circle cx="12" cy="12" r="9" stroke="#20D5C4" strokeWidth="2" fill="none" /><path d="M12 7v5l3 2" stroke="#20D5C4" strokeWidth="2" fill="none" strokeLinecap="round" /></>,
-    eyebrow: 'PAGO PENDIENTE',
-    title: 'Estamos confirmando tu pago.',
-    msg: 'Tu transacción quedó en proceso (común en pagos PSE / efectivo). Te enviaremos un correo en cuanto el banco confirme. No es necesario pagar de nuevo.',
-  },
   rejected: {
     color: '#FF6B7A', tone: 'rgba(255,107,122',
     icon: <><path d="M8 8l8 8M16 8l-8 8" stroke="#FF6B7A" strokeWidth="2.2" strokeLinecap="round" /></>,
@@ -46,8 +34,8 @@ const VARIANTS = {
 };
 
 export default function PaymentResult() {
-  const { state, ref, value, email } = parseParams();
-  const key = state === '4' ? 'approved' : state === '7' ? 'pending' : state ? 'rejected' : 'approved';
+  const { status, ref } = parseParams();
+  const key = status === 'success' ? 'approved' : status === 'error' ? 'rejected' : 'approved';
   const v = VARIANTS[key];
 
   return (
@@ -66,11 +54,12 @@ export default function PaymentResult() {
         <h1 className="h-display text-3xl lg:text-[40px] text-white mt-3">{v.title}</h1>
         <p className="text-white/65 mt-4 leading-relaxed">{v.msg}</p>
 
-        {(ref || value) && (
-          <div className="glass mt-6 p-4 text-left flex flex-col gap-2 text-[13px]">
-            {ref && <div className="flex justify-between"><span className="text-white/50">Referencia</span><span className="font-mono text-white/90">{ref}</span></div>}
-            {value && <div className="flex justify-between"><span className="text-white/50">Valor</span><span className="font-mono text-white/90">$ {Number(value).toLocaleString('es-CO')}</span></div>}
-            {email && <div className="flex justify-between"><span className="text-white/50">Correo</span><span className="text-white/90 truncate ml-3">{email}</span></div>}
+        {ref && (
+          <div className="glass mt-6 p-4 text-left text-[13px]">
+            <div className="flex justify-between">
+              <span className="text-white/50">Referencia de pago</span>
+              <span className="font-mono text-white/90">{ref}</span>
+            </div>
           </div>
         )}
 

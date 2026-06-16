@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { EVENT, TARIFAS, CORPORATIVO_MIN, calcularTarifa, fmtCOP } from '../config.js';
-import PayUForm from './PayUForm.jsx';
+import RapydCheckout from './RapydCheckout.jsx';
 
 /* ---------- primitivos de formulario ---------- */
 function Field({ label, hint, error, children, required }) {
@@ -330,8 +330,7 @@ export default function Inscripcion() {
                 </label>
                 {errors.acepta && <span className="text-[12px] text-[#FF8E97] -mt-2">{errors.acepta}</span>}
 
-                {/* PayU form scaffold */}
-                <PayUForm data={d} total={total} tarifaUnit={tarifaUnit} disabled={!d.acepta} />
+                <RapydCheckout data={d} total={total} disabled={!d.acepta} />
 
                 <div className="flex items-center gap-2 text-[11px] text-white/45">
                   <svg width="13" height="13" viewBox="0 0 14 14"><rect x="2.5" y="6" width="9" height="6" rx="1.2" stroke="currentColor" fill="none" /><path d="M4.5 6V4.5a2.5 2.5 0 015 0V6" stroke="currentColor" strokeWidth="1.1" fill="none" /></svg>

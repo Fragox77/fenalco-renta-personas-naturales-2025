@@ -1,4 +1,4 @@
-// Configuración central del evento, tarifas y PayU.
+// Configuración central del evento, tarifas y pasarela de pago.
 // Editar AQUÍ cambia precios/fechas en toda la app (landing + inscripción).
 
 export const EVENT = {
@@ -16,18 +16,16 @@ export const EVENT = {
   sitio: 'https://fenalcosantander.com.co/formacion/',
 };
 
-// Tarifas en COP. La lógica de preventa es declarativa (toggle "soy afiliado").
+// Tarifas en COP. La lógica es declarativa (toggle "soy afiliado").
 export const TARIFAS = {
-  full: 500000,           // referencia (tachada)
-  afiliado: 380000,       // preventa afiliado
-  particular: 400000,     // preventa particular
-  corporativo: 332500,    // por persona, afiliado 3+
+  full:        500000,   // precio de referencia (tachado)
+  afiliado:    380000,   // tarifa afiliado
+  particular:  400000,   // tarifa particular
+  corporativo: 332500,   // por persona, afiliado 3+
 };
 
-// Umbral para tarifa corporativa
 export const CORPORATIVO_MIN = 3;
 
-// Calcula tarifa unitaria según condición + nº participantes
 export function calcularTarifa({ esAfiliado, participantes }) {
   if (esAfiliado && participantes >= CORPORATIVO_MIN) return TARIFAS.corporativo;
   if (esAfiliado) return TARIFAS.afiliado;
@@ -38,20 +36,7 @@ export function fmtCOP(n) {
   return '$ ' + n.toLocaleString('es-CO');
 }
 
-// --- PayU WebCheckout (sandbox por defecto) ---
-// ⚠️ apiKey y la firma JAMÁS van en el frontend. Ver BACKEND.md.
-// merchantId / accountId son públicos; la firma se solicita al backend.
-export const PAYU = {
-  // URL de WebCheckout — sandbox vs producción
-  actionUrl: 'https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/',
-  // Credenciales públicas de SANDBOX (de la doc oficial PayU LATAM)
-  merchantId: '508029',
-  accountId: '512321',     // Colombia COP sandbox
-  currency: 'COP',
-  test: 1,                  // 1 = prueba, 0 = producción
-  // Endpoint de TU backend que devuelve { referenceCode, signature, amount }
-  signEndpoint: '/api/payu/sign',
-  // URLs de respuesta/confirmación (ajusta el dominio en producción)
-  responseUrl: window.location.origin + '/#/resultado',
-  confirmationUrl: window.location.origin + '/api/payu/confirmation',
-};
+// Pasarela de pago — CRM Fenalco (Rapyd)
+// VITE_CRM_URL se configura en Vercel → Settings → Environment Variables
+// En desarrollo local apunta a http://localhost:5000
+export const CRM_URL = import.meta.env.VITE_CRM_URL || 'http://localhost:5000';
