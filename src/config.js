@@ -36,7 +36,3 @@ export function fmtCOP(n) {
   return '$ ' + n.toLocaleString('es-CO');
 }
 
-// Pasarela de pago — CRM Fenalco (Rapyd)
-// VITE_CRM_URL se configura en Vercel → Settings → Environment Variables
-// En desarrollo local apunta a http://localhost:5000
-export const CRM_URL = import.meta.env.VITE_CRM_URL || 'http://localhost:5000';

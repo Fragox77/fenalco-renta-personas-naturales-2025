@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CRM_URL, fmtCOP } from '../config.js';
+import { fmtCOP } from '../config.js';
 
 export default function RapydCheckout({ data, total, disabled }) {
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ export default function RapydCheckout({ data, total, disabled }) {
       const successUrl = `${window.location.origin}/#/resultado?status=success`;
       const errorUrl   = `${window.location.origin}/#/resultado?status=error`;
 
-      const res = await fetch(`${CRM_URL}/api/rapyd/checkout`, {
+      const res = await fetch('/api/rapyd/checkout', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
