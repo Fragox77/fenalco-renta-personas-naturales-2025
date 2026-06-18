@@ -95,7 +95,7 @@ export default function Pricing() {
               {!p.muted && (
                 <a href="#/inscripcion"
                    className={p.highlight ? 'btn-cta !text-sm !py-3' : 'btn-ghost !text-sm !py-3'}>
-                  {p.highlight ? 'Asegurar cupo' : 'Inscribirme'}
+                  {p.highlight ? 'Comprar ahora' : 'Comprar'}
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>

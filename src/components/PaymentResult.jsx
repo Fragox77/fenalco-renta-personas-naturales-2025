@@ -1,9 +1,5 @@
 import { EVENT } from '../config.js';
 
-/**
- * Página de resultado de Rapyd (complete/error_payment_url → #/resultado).
- * El CRM añade ?status=success|error&ref=RPN25-xxx a la URL de retorno.
- */
 function parseParams() {
   const q = new URLSearchParams(window.location.search);
   const hashQ = window.location.hash.includes('?')
@@ -11,8 +7,8 @@ function parseParams() {
     : new URLSearchParams();
   const get = k => q.get(k) || hashQ.get(k);
   return {
-    status: get('status'), // 'success' | 'error'
-    ref:    get('ref'),    // referenceId del CRM (ej. RPN25-1234-ABC)
+    status: get('status'),
+    ref:    get('ref'),
   };
 }
 
@@ -35,7 +31,7 @@ const VARIANTS = {
 
 export default function PaymentResult() {
   const { status, ref } = parseParams();
-  const key = status === 'success' ? 'approved' : status === 'error' ? 'rejected' : 'approved';
+  const key = status === 'success' ? 'approved' : 'rejected';
   const v = VARIANTS[key];
 
   return (

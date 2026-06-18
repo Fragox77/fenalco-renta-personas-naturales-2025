@@ -64,13 +64,12 @@ function Stepper({ step, steps }) {
 }
 
 /* ---------- componente principal ---------- */
-const STEPS = ['Datos', 'Modalidad', 'Facturación', 'Pago'];
+const STEPS = ['Datos', 'Modalidad', 'Pago'];
 
 const EMPTY = {
-  nombre: '', tipoDoc: 'CC', doc: '', email: '', tel: '', ciudad: '',
-  empresa: '', cargo: '',
+  nombre: '', apellido: '', razonSocial: '', doc: '', email: '', tel: '',
+  direccion: '', ciudad: '', cargo: '',
   esAfiliado: false, participantes: 1, modalidad: 'presencial',
-  necesitaFactura: false, razonSocial: '', nit: '', dirFactura: '', respFiscal: 'No responsable de IVA',
   metodo: 'PSE', acepta: false,
 };
 
@@ -91,17 +90,14 @@ export default function Inscripcion() {
     const e = {};
     if (s === 0) {
       if (!d.nombre.trim()) e.nombre = 'Requerido';
+      if (!d.apellido.trim()) e.apellido = 'Requerido';
       if (!d.doc.trim()) e.doc = 'Requerido';
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) e.email = 'Correo inválido';
       if (!d.tel.trim()) e.tel = 'Requerido';
+      if (!d.direccion.trim()) e.direccion = 'Requerido';
       if (!d.ciudad.trim()) e.ciudad = 'Requerido';
     }
-    if (s === 2 && d.necesitaFactura) {
-      if (!d.razonSocial.trim()) e.razonSocial = 'Requerido';
-      if (!d.nit.trim()) e.nit = 'Requerido';
-      if (!d.dirFactura.trim()) e.dirFactura = 'Requerido';
-    }
-    if (s === 3 && !d.acepta) e.acepta = 'Debes aceptar para continuar';
+    if (s === 2 && !d.acepta) e.acepta = 'Debes aceptar para continuar';
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -134,29 +130,25 @@ export default function Inscripcion() {
             <span className="eyebrow">Inscripción</span>
           </div>
           <h1 className="h-display text-3xl lg:text-[44px] text-white mt-3">Asegura tu cupo.</h1>
-          <p className="text-white/65 mt-2 text-[15px]">Completa tus datos y paga de forma segura con PayU.</p>
+          <p className="text-white/65 mt-2 text-[15px]">Completa tus datos de facturación y paga de forma segura.</p>
 
           <div className="glass-hi p-5 lg:p-7 mt-7">
             <Stepper step={step} steps={STEPS} />
             <div className="h-px bg-white/[0.08] my-6" />
 
-            {/* STEP 0 — datos */}
+            {/* STEP 0 — datos de facturación */}
             {step === 0 && (
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="sm:col-span-2">
-                  <Field label="Nombre completo" required error={errors.nombre}>
-                    <TextInput value={d.nombre} onChange={e => set('nombre', e.target.value)} placeholder="Ej. María Fernanda Gómez" />
-                  </Field>
-                </div>
-                <Field label="Tipo de documento" required>
-                  <SelectInput value={d.tipoDoc} onChange={e => set('tipoDoc', e.target.value)}>
-                    <option value="CC">Cédula de ciudadanía</option>
-                    <option value="CE">Cédula de extranjería</option>
-                    <option value="NIT">NIT</option>
-                    <option value="PAS">Pasaporte</option>
-                  </SelectInput>
+                <Field label="Nombre" required error={errors.nombre}>
+                  <TextInput value={d.nombre} onChange={e => set('nombre', e.target.value)} placeholder="Ej. María Fernanda" />
                 </Field>
-                <Field label="Número de documento" required error={errors.doc}>
+                <Field label="Apellido" required error={errors.apellido}>
+                  <TextInput value={d.apellido} onChange={e => set('apellido', e.target.value)} placeholder="Ej. Gómez Ruiz" />
+                </Field>
+                <Field label="Razón social" hint="opcional si es persona natural">
+                  <TextInput value={d.razonSocial} onChange={e => set('razonSocial', e.target.value)} placeholder="Nombre de la empresa" />
+                </Field>
+                <Field label="Cédula / NIT" required error={errors.doc}>
                   <TextInput value={d.doc} onChange={e => set('doc', e.target.value)} placeholder="Sin puntos ni comas" inputMode="numeric" />
                 </Field>
                 <Field label="Correo electrónico" required error={errors.email} hint="recibirás aquí la confirmación">
@@ -165,11 +157,11 @@ export default function Inscripcion() {
                 <Field label="Teléfono / WhatsApp" required error={errors.tel}>
                   <TextInput value={d.tel} onChange={e => set('tel', e.target.value)} placeholder="+57 3xx xxx xxxx" inputMode="tel" />
                 </Field>
+                <Field label="Dirección" required error={errors.direccion}>
+                  <TextInput value={d.direccion} onChange={e => set('direccion', e.target.value)} placeholder="Cra. 20 #36-49" />
+                </Field>
                 <Field label="Ciudad" required error={errors.ciudad}>
                   <TextInput value={d.ciudad} onChange={e => set('ciudad', e.target.value)} placeholder="Bucaramanga" />
-                </Field>
-                <Field label="Empresa" hint="opcional">
-                  <TextInput value={d.empresa} onChange={e => set('empresa', e.target.value)} placeholder="Razón social o independiente" />
                 </Field>
                 <div className="sm:col-span-2">
                   <Field label="Cargo" hint="opcional">
@@ -243,59 +235,8 @@ export default function Inscripcion() {
               </div>
             )}
 
-            {/* STEP 2 — facturación */}
+            {/* STEP 2 — pago */}
             {step === 2 && (
-              <div className="flex flex-col gap-5">
-                <button type="button" onClick={() => set('necesitaFactura', !d.necesitaFactura)}
-                  className="flex items-center justify-between rounded-2xl p-4 transition text-left"
-                  style={{ background: d.necesitaFactura ? 'rgba(32,213,196,0.10)' : 'rgba(255,255,255,0.03)',
-                           border: `1px solid ${d.necesitaFactura ? 'rgba(32,213,196,0.40)' : 'rgba(255,255,255,0.10)'}` }}>
-                  <div>
-                    <div className="font-display font-bold text-[15px] text-white">Necesito factura electrónica</div>
-                    <div className="text-[12px] text-white/60 mt-0.5">Inversión 100% deducible y exenta de IVA</div>
-                  </div>
-                  <span className="w-11 h-6 rounded-full relative transition shrink-0"
-                        style={{ background: d.necesitaFactura ? '#20D5C4' : 'rgba(255,255,255,0.15)' }}>
-                    <span className="absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all"
-                          style={{ left: d.necesitaFactura ? '22px' : '2px' }} />
-                  </span>
-                </button>
-
-                {d.necesitaFactura ? (
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="sm:col-span-2">
-                      <Field label="Razón social" required error={errors.razonSocial}>
-                        <TextInput value={d.razonSocial} onChange={e => set('razonSocial', e.target.value)} placeholder="Nombre legal de la empresa" />
-                      </Field>
-                    </div>
-                    <Field label="NIT" required error={errors.nit}>
-                      <TextInput value={d.nit} onChange={e => set('nit', e.target.value)} placeholder="900.123.456-7" />
-                    </Field>
-                    <Field label="Responsabilidad fiscal" required>
-                      <SelectInput value={d.respFiscal} onChange={e => set('respFiscal', e.target.value)}>
-                        <option>No responsable de IVA</option>
-                        <option>Responsable de IVA</option>
-                        <option>Gran contribuyente</option>
-                        <option>Régimen simple de tributación</option>
-                      </SelectInput>
-                    </Field>
-                    <div className="sm:col-span-2">
-                      <Field label="Dirección de facturación" required error={errors.dirFactura}>
-                        <TextInput value={d.dirFactura} onChange={e => set('dirFactura', e.target.value)} placeholder="Dirección · ciudad" />
-                      </Field>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="rounded-2xl border border-dashed border-white/15 p-5 text-[13px] text-white/55 leading-relaxed">
-                    La factura se emitirá a nombre del participante con los datos del paso 1.
-                    Activa el interruptor si requieres facturación corporativa a nombre de una empresa.
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* STEP 3 — pago */}
-            {step === 3 && (
               <div className="flex flex-col gap-5">
                 <div>
                   <div className="text-[13px] font-medium text-white/80 mb-2.5">Método de pago <span className="text-fen-green">*</span></div>
@@ -334,7 +275,7 @@ export default function Inscripcion() {
 
                 <div className="flex items-center gap-2 text-[11px] text-white/45">
                   <svg width="13" height="13" viewBox="0 0 14 14"><rect x="2.5" y="6" width="9" height="6" rx="1.2" stroke="currentColor" fill="none" /><path d="M4.5 6V4.5a2.5 2.5 0 015 0V6" stroke="currentColor" strokeWidth="1.1" fill="none" /></svg>
-                  Pago procesado de forma segura por PayU Latam · PCI-DSS
+                  Pago procesado de forma segura por Rapyd · PCI-DSS
                 </div>
               </div>
             )}
@@ -351,7 +292,7 @@ export default function Inscripcion() {
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </button>
               ) : (
-                <span className="text-[12px] text-white/45 max-w-[200px] text-right">Serás redirigido a PayU para completar el pago.</span>
+                <span className="text-[12px] text-white/45 max-w-[200px] text-right">Serás redirigido a Rapyd para completar el pago.</span>
               )}
             </div>
           </div>

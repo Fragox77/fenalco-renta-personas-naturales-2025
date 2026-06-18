@@ -101,19 +101,13 @@ export default function Hero() {
 
           <div className="flex flex-wrap gap-3 mt-1">
             <a href="#/inscripcion" className="btn-cta">
-              Inscribirme ahora
+              Comprar ahora
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
-            <a
-              href="https://wa.me/573102355262?text=Hola,%20quiero%20información%20del%20seminario%20Renta%20Personas%20Naturales%202025"
-              target="_blank" rel="noreferrer" className="btn-whatsapp"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.6.1-.3-.2-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.2 0 1.3 1 2.6 1.1 2.7.1.2 1.9 2.9 4.6 4.1 1.6.7 2.3.7 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.2-.3-.3-.6-.4zm-5.4 7.3h0c-1.7 0-3.4-.5-4.9-1.4l-.4-.2-3.6.9.9-3.5-.2-.4c-1-1.5-1.5-3.3-1.5-5.1 0-5.4 4.4-9.8 9.7-9.8 2.6 0 5 1 6.8 2.9 1.8 1.9 2.8 4.3 2.8 6.9 0 5.4-4.3 9.7-9.6 9.7zm8.3-18C18.2 1.6 15.2.3 12.1.3 5.5.3.1 5.7.1 12.3c0 2.1.6 4.2 1.6 6L0 24l5.8-1.5c1.7.9 3.7 1.4 5.7 1.4h0c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.4-8.5z"/>
-              </svg>
-              WhatsApp
+            <a href="#/informacion" className="btn-ghost">
+              Quiero más información
             </a>
           </div>
 

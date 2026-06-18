@@ -1,15 +1,6 @@
 import { useState } from 'react';
 import { CRM_URL, fmtCOP } from '../config.js';
 
-/**
- * Botón de pago que llama al CRM (Rapyd) y redirige al checkout hosted.
- * Reemplaza a PayUForm.jsx.
- *
- * Flujo:
- *  1. POST CRM_URL/api/rapyd/checkout  → { checkoutUrl, referenceId }
- *  2. window.location.href = checkoutUrl  (página de Rapyd)
- *  3. Rapyd redirige a /#/resultado?status=success|error&ref=...
- */
 export default function RapydCheckout({ data, total, disabled }) {
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState('');
@@ -26,31 +17,20 @@ export default function RapydCheckout({ data, total, disabled }) {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          // Obligatorios
           amount:  total,
           email:   data.email,
           nombre:  data.nombre,
-          // Identificador del producto — el CRM lo usa para diferenciar landing pages
           producto: 'renta_2025',
-          // Datos del comprador
           apellido:      data.apellido,
           telefono:      data.tel,
           documento:     data.doc,
-          tipoDocumento: data.tipoDoc,
           ciudad:        data.ciudad,
-          empresa:       data.empresa,
+          razonSocial:   data.razonSocial,
+          direccion:     data.direccion,
           cargo:         data.cargo,
-          // Específicos del seminario
-          modalidad:    data.modalidad,
+          modalidad:     data.modalidad,
           participantes: data.participantes,
-          esAfiliado:   data.esAfiliado,
-          // Facturación
-          necesitaFactura: data.necesitaFactura,
-          razonSocial:     data.razonSocial,
-          nit:             data.nit,
-          dirFactura:      data.dirFactura,
-          respFiscal:      data.respFiscal,
-          // URLs de retorno (el CRM añade &ref=... automáticamente)
+          esAfiliado:    data.esAfiliado,
           successUrl,
           errorUrl,
         }),
@@ -64,7 +44,6 @@ export default function RapydCheckout({ data, total, disabled }) {
         return;
       }
 
-      // Redirige a la página de pago hosted de Rapyd
       window.location.href = json.checkoutUrl;
 
     } catch {
