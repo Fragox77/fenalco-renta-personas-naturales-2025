@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 function getHeader(req, name) {
   return req.headers?.[name] || req.headers?.[name.toLowerCase()] || '';
@@ -47,7 +47,7 @@ function verifyRapydWebhookSignature({ webhookUrl, salt, timestamp, accessKey, s
   return [base64Hex, base64HexUrlSafe, base64Raw, base64RawUrlSafe].some((candidate) => safeEqual(incoming, candidate));
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ message: 'Metodo no permitido' });
@@ -128,4 +128,4 @@ module.exports = async function handler(req, res) {
 
   // TODO: Persistir estado de pago/inscripcion en DB segun eventType y status.
   return res.status(200).json({ received: true });
-};
+}
