@@ -27,16 +27,19 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ message: 'El nombre es obligatorio.' });
   }
 
+  const mensaje = String(body.mensaje || '').trim();
+  const ciudad = String(body.ciudad || '').trim();
+  const observaciones = [ciudad && `Ciudad: ${ciudad}`, mensaje && `Mensaje: ${mensaje}`].filter(Boolean).join(' | ');
+
   const payload = {
     nombre: String(body.nombre || '').trim(),
     email: String(body.email || '').trim(),
     telefono: String(body.tel || body.telefono || '').trim(),
-    ciudad: String(body.ciudad || '').trim(),
-    mensaje: String(body.mensaje || '').trim(),
-    origen: 'landing_informacion',
+    origen: 'lead',
+    observaciones,
   };
 
-  const endpoint = `${baseUrl.replace(/\/$/, '')}/api/public-forms/${encodeURIComponent(eventSlug)}/leads`;
+  const endpoint = `${baseUrl.replace(/\/$/, '')}/api/public-forms/${encodeURIComponent(eventSlug)}/inscripciones`;
 
   try {
     const crmRes = await fetch(endpoint, {
