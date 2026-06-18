@@ -83,6 +83,21 @@ Cargadas vía Google Fonts en `index.html`.
 ### Render
 1. New → Static Site. Build command: `npm install && npm run build`. Publish dir: `dist`.
 
+## CRM bridge (preinscripciones)
+
+Se implemento un endpoint serverless para guardar preinscripciones en CRM antes del pago:
+
+- `POST /api/crm/preinscripcion` (archivo `api/crm/preinscripcion.js`)
+- Reenvia al CRM: `POST /api/public-forms/:slug/inscripciones`
+
+Variables que debes crear en Vercel (Project Settings > Environment Variables):
+
+- `CRM_BASE_URL` (ej: `https://fenalco-crm.onrender.com`)
+- `CRM_API_KEY` (SATELITE_API_KEY del CRM)
+- `CRM_EVENT_SLUG` (slug del evento en CRM)
+
+Sin estas variables, el formulario no avanzara al pago y mostrara el error correspondiente.
+
 ---
 
 © Fenalco Santander · Educación Continua

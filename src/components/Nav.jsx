@@ -120,7 +120,7 @@ export default function Nav() {
             <span className="pulse" />CIERRA 30 MAY
           </span>
           <a href="#/inscripcion" className="btn-cta !py-2.5 !px-4 !text-sm">
-            Inscribirme
+            Comprar
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

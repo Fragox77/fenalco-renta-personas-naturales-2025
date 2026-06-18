@@ -8,6 +8,7 @@ import Pricing from './components/Pricing.jsx';
 import CTA from './components/CTA.jsx';
 import Footer from './components/Footer.jsx';
 import Inscripcion from './components/Inscripcion.jsx';
+import LeadForm from './components/LeadForm.jsx';
 import PaymentResult from './components/PaymentResult.jsx';
 
 function useHashRoute() {
@@ -27,7 +28,7 @@ function useHashRoute() {
 
 function Landing() {
   return (
-    <div className="bg-deep min-h-screen text-white">
+    <div className="bg-deep min-h-screen text-white overflow-x-hidden">
       <Nav />
       <main>
         <Hero />
@@ -45,6 +46,7 @@ function Landing() {
 export default function App() {
   const route = useHashRoute();
   if (route === '#/inscripcion') return <Inscripcion />;
+  if (route === '#/informacion') return <LeadForm />;
   if (route === '#/resultado') return <PaymentResult />;
   return <Landing />;
 }
