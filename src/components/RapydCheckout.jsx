@@ -10,7 +10,7 @@ export default function RapydCheckout({ data, total, disabled }) {
     setError('');
 
     try {
-      const successUrl = `${window.location.origin}/#/resultado?status=success`;
+      const successUrl = `${window.location.origin}/#/resultado?status=pending`;
       const errorUrl   = `${window.location.origin}/#/resultado?status=error`;
 
       const res = await fetch('/api/rapyd/checkout', {
@@ -42,6 +42,13 @@ export default function RapydCheckout({ data, total, disabled }) {
         setError(json.error || 'No se pudo iniciar el pago. Intenta nuevamente.');
         setLoading(false);
         return;
+      }
+
+      if (json.checkoutId) {
+        sessionStorage.setItem('rapyd_checkout_id', json.checkoutId);
+      }
+      if (json.referenceCode) {
+        sessionStorage.setItem('rapyd_ref', json.referenceCode);
       }
 
       window.location.href = json.checkoutUrl;
