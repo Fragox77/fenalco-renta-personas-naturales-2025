@@ -117,7 +117,7 @@ export default function Nav() {
         </nav>
         <div className="flex items-center gap-3">
           <span className="deadline hidden sm:inline-flex">
-            <span className="pulse" />CIERRA 30 MAY
+            <span className="pulse" />CIERRA 30 JUNIO
           </span>
           <a href="#/inscripcion" className="btn-cta !py-2.5 !px-4 !text-sm">
             Comprar
