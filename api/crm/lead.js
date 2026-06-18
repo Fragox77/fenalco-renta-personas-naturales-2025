@@ -33,8 +33,12 @@ export default async function handler(req, res) {
 
   const payload = {
     nombre: String(body.nombre || '').trim(),
+    apellido: '-',
+    cedula: '-',
     email: String(body.email || '').trim(),
     telefono: String(body.tel || body.telefono || '').trim(),
+    cargo: '-',
+    empresa: '-',
     origen: 'lead',
     observaciones,
   };
@@ -63,7 +67,6 @@ export default async function handler(req, res) {
       return res.status(502).json({
         message: data?.message || 'CRM rechazo el lead.',
         crmStatus: crmRes.status,
-        debug: { endpoint, raw: raw?.slice(0, 500) },
       });
     }
 
