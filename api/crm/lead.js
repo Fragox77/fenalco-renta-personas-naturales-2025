@@ -41,6 +41,7 @@ export default async function handler(req, res) {
     empresa: '-',
     origen: 'lead',
     observaciones,
+    consentimiento: { autorizado: true, version: 'rpn-2025-v1' },
   };
 
   const endpoint = `${baseUrl.replace(/\/$/, '')}/api/public-forms/${encodeURIComponent(eventSlug)}/inscripciones`;
