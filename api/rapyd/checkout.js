@@ -55,9 +55,17 @@ function parseBody(req) {
 }
 
 module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
-    return res.status(405).json({ message: 'Metodo no permitido' });
+    return res.status(405).json({ error: 'Metodo no permitido' });
   }
 
   const accessKey = (process.env.RAPYD_ACCESS_KEY || '').trim();
@@ -65,38 +73,47 @@ module.exports = async function handler(req, res) {
 
   if (!accessKey || !secretKey) {
     return res.status(500).json({
-      message: 'Faltan variables RAPYD_ACCESS_KEY o RAPYD_SECRET_KEY en el servidor.',
+      error: 'Faltan variables RAPYD_ACCESS_KEY o RAPYD_SECRET_KEY en el servidor.',
     });
   }
 
   const body = parseBody(req);
   if (!body) {
-    return res.status(400).json({ message: 'Body JSON invalido.' });
+    return res.status(400).json({ error: 'Body JSON invalido.' });
   }
 
   const amount = Number(body.amount);
   if (!Number.isFinite(amount) || amount <= 0) {
-    return res.status(400).json({ message: 'amount debe ser un numero mayor que 0.' });
+    return res.status(400).json({ error: 'amount debe ser un numero mayor que 0.' });
   }
 
   const currency = String(body.currency || 'COP').toUpperCase();
   const refCode = `RPN25-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+
+  const buyerName = [body.nombre, body.apellido].filter(Boolean).join(' ') || '';
 
   const checkoutBody = {
     amount,
     currency,
     country: 'CO',
     merchant_reference_id: refCode,
-    complete_checkout_url: body.completeUrl || '',
-    cancel_checkout_url: body.cancelUrl || '',
+    complete_checkout_url: body.successUrl || '',
+    cancel_checkout_url: body.errorUrl || '',
     error_checkout_url: body.errorUrl || '',
     language: 'es',
     metadata: {
-      description: body.description || '',
-      buyerEmail: body.buyerEmail || '',
-      buyerName: body.buyerName || '',
-      buyerPhone: body.buyerPhone || '',
-      ...(body.metadata || {}),
+      producto: body.producto || 'renta_2025',
+      buyerEmail: body.email || '',
+      buyerName,
+      buyerPhone: body.telefono || '',
+      documento: body.documento || '',
+      ciudad: body.ciudad || '',
+      razonSocial: body.razonSocial || '',
+      direccion: body.direccion || '',
+      cargo: body.cargo || '',
+      modalidad: body.modalidad || '',
+      participantes: body.participantes || 1,
+      esAfiliado: body.esAfiliado || false,
     },
   };
 
@@ -119,10 +136,10 @@ module.exports = async function handler(req, res) {
 
     console.error('[rapyd-checkout] Error response', JSON.stringify(result));
     return res.status(502).json({
-      message: result.status?.message || 'Error al crear checkout en Rapyd.',
+      error: result.status?.message || 'Error al crear checkout en Rapyd.',
     });
   } catch (err) {
     console.error('[rapyd-checkout] Request failed', err);
-    return res.status(502).json({ message: 'No se pudo conectar con Rapyd.' });
+    return res.status(502).json({ error: 'No se pudo conectar con Rapyd.' });
   }
 };
