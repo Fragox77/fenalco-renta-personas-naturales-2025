@@ -48,7 +48,7 @@ export default function LeadForm() {
       if (!res.ok) throw new Error();
       setStatus('ok');
     } catch {
-      setStatus('ok');
+      setStatus('error');
     }
   }
 
@@ -134,6 +134,13 @@ export default function LeadForm() {
               <input value={d.mensaje} onChange={e => set('mensaje', e.target.value)} className={inputCls} placeholder="Tarifas, horarios, contenido..." />
             </Field>
           </div>
+
+          {status === 'error' && (
+            <div className="rounded-2xl border border-[#FF6B7A]/30 bg-[#FF6B7A]/[0.06] p-4 mt-4
+                            text-[13px] text-[#FF8E97] leading-relaxed">
+              No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.
+            </div>
+          )}
 
           <div className="flex items-center justify-between mt-7 pt-6 border-t border-white/[0.08]">
             <a href="#/" className="btn-ghost !py-3">Volver</a>
