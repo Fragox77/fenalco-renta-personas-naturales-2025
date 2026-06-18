@@ -63,6 +63,7 @@ export default async function handler(req, res) {
       return res.status(502).json({
         message: data?.message || 'CRM rechazo el lead.',
         crmStatus: crmRes.status,
+        debug: { endpoint, raw: raw?.slice(0, 500) },
       });
     }
 
