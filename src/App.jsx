@@ -27,7 +27,7 @@ function useHashRoute() {
 
 function Landing() {
   return (
-    <div className="bg-deep min-h-screen text-white">
+    <div className="bg-deep min-h-screen text-white overflow-x-hidden">
       <Nav />
       <main>
         <Hero />
