@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const https = require('https');
+import crypto from 'crypto';
+import https from 'https';
 
 function generateSalt(length = 12) {
   return crypto.randomBytes(length).toString('hex').slice(0, length);
@@ -54,7 +54,7 @@ function parseBody(req) {
   return req.body;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -142,4 +142,4 @@ module.exports = async function handler(req, res) {
     console.error('[rapyd-checkout] Request failed', err);
     return res.status(502).json({ error: 'No se pudo conectar con Rapyd.' });
   }
-};
+}
