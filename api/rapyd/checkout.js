@@ -16,7 +16,7 @@ function rapydRequest({ method, urlPath, body, accessKey, secretKey }) {
 
   return new Promise((resolve, reject) => {
     const options = {
-      hostname: 'sandboxapi.rapyd.net',
+      hostname: 'api.rapyd.net',
       path: urlPath,
       method: method.toUpperCase(),
       headers: {
