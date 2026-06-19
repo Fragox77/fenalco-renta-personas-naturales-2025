@@ -227,7 +227,7 @@ export default function Inscripcion() {
                 {/* participantes */}
                 <Field label="Número de participantes" hint={`desde ${CORPORATIVO_MIN} afiliados aplica tarifa corporativa`}>
                   <div className="flex items-center gap-3">
-                    <button type="button" onClick={() => set('participantes', Math.max(1, Number(d.participantes) - 1))}
+                    <button type="button" onClick={() => set('participantes', Math.max(d.esAfiliado ? CORPORATIVO_MIN : 1, Number(d.participantes) - 1))}
                             className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 text-white text-xl grid place-items-center hover:bg-white/10">−</button>
                     <span className="font-display font-bold text-2xl text-white w-10 text-center">{d.participantes}</span>
                     <button type="button" onClick={() => set('participantes', Math.min(50, Number(d.participantes) + 1))}
