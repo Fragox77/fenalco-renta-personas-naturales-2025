@@ -106,7 +106,7 @@ export default function Hero() {
                 <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
-            <a href="#/informacion" className="btn-ghost">
+            <a href="#/informacion" className="btn-info">
               Quiero más información
             </a>
           </div>
