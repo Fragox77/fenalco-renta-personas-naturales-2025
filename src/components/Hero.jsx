@@ -122,7 +122,7 @@ export default function Hero() {
             {[
               ['02 · Julio', 'FECHA TALLER'],
               ['8h', 'INTENSIDAD'],
-              ['$380K', 'PREVENTA AFILIADO'],
+              ['$332K', 'DESDE · CORPORATIVO'],
               ['Cesar Ánzola', 'EXPERTO TRIBUTARISTA'],
             ].map(([v, l]) => (
               <div key={l}>

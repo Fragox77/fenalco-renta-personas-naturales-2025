@@ -66,16 +66,21 @@ function Stepper({ step, steps }) {
 /* ---------- componente principal ---------- */
 const STEPS = ['Datos', 'Modalidad', 'Pago'];
 
-const EMPTY = {
-  nombre: '', apellido: '', razonSocial: '', doc: '', email: '', tel: '',
-  direccion: '', ciudad: '', cargo: '',
-  esAfiliado: false, participantes: 1, modalidad: 'presencial',
-  metodo: 'PSE', acepta: false,
-};
+function initialState() {
+  const params = new URLSearchParams(window.location.hash.split('?')[1] || '');
+  const tarifa = params.get('tarifa');
+  const isCorp = tarifa === 'corporativo';
+  return {
+    nombre: '', apellido: '', razonSocial: '', doc: '', email: '', tel: '',
+    direccion: '', ciudad: '', cargo: '',
+    esAfiliado: isCorp, participantes: isCorp ? 3 : 1, modalidad: 'presencial',
+    metodo: 'PSE', acepta: false,
+  };
+}
 
 export default function Inscripcion() {
   const [step, setStep] = useState(0);
-  const [d, setD] = useState(EMPTY);
+  const [d, setD] = useState(initialState);
   const [errors, setErrors] = useState({});
   const set = (k, v) => setD(prev => ({ ...prev, [k]: v }));
 
@@ -312,7 +317,7 @@ export default function Inscripcion() {
                 ['Modalidad', d.modalidad === 'presencial' ? 'Presencial · Bucaramanga' : 'Online en vivo'],
                 ['Docente', EVENT.docente],
                 ['Participantes', String(d.participantes)],
-                ['Tarifa', d.esAfiliado ? (Number(d.participantes) >= CORPORATIVO_MIN ? 'Corporativo afiliado' : 'Afiliado') : 'Particular'],
+                ['Tarifa', d.esAfiliado && Number(d.participantes) >= CORPORATIVO_MIN ? 'Corporativo afiliado' : 'Tarifa full'],
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-3">
                   <span className="text-white/50">{k}</span>

@@ -1,8 +1,6 @@
 const PLANS = [
-  { tag: 'Preventa',   label: 'Afiliado',         price: '380.000', desc: 'Hasta 29 de mayo',   highlight: true },
-  { tag: 'Preventa',   label: 'Particular',       price: '400.000', desc: 'Hasta 29 de mayo' },
-  { tag: 'Corporativo',label: 'Afiliado 3+',      price: '332.500', desc: 'Por persona' },
-  { tag: 'Tarifa full',label: 'Desde 30 mayo',    price: '500.000', desc: 'Cupo regular', muted: true },
+  { tag: 'Corporativo', label: 'Afiliado 3+', price: '332.500', desc: 'Por persona', highlight: true, href: '#/inscripcion?tarifa=corporativo' },
+  { tag: 'Tarifa full', label: 'Cupo regular', price: '500.000', desc: 'Individual', href: '#/inscripcion?tarifa=full' },
 ];
 
 const INCLUDES = [
@@ -31,7 +29,7 @@ export default function Pricing() {
             <span className="eyebrow">Modalidad & inversión</span>
           </div>
           <h2 className="h-display text-4xl lg:text-[52px] text-white mt-4">
-            Preventa abierta hasta el<br /><span className="grad-text">30 de mayo.</span>
+            Inscríbete antes del<br /><span className="grad-text">30 de junio.</span>
           </h2>
           <p className="text-white/70 mt-5 leading-relaxed">
             Formación exenta de IVA y 100% deducible del impuesto de renta. Cupos limitados.
@@ -67,7 +65,7 @@ export default function Pricing() {
         </div>
 
         {/* Pricing grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {PLANS.map(p => (
             <div key={p.label} className="p-6 rounded-3xl flex flex-col gap-2.5 premium-card"
                  style={{
@@ -77,7 +75,6 @@ export default function Pricing() {
                    border: p.highlight
                      ? '1px solid rgba(0,206,124,0.45)'
                      : '1px solid rgba(255,255,255,0.10)',
-                   opacity: p.muted ? 0.55 : 1,
                    boxShadow: p.highlight ? '0 30px 60px -20px rgba(0,206,124,0.35)' : 'none',
                  }}>
               <div className="flex justify-between items-center">
@@ -92,15 +89,13 @@ export default function Pricing() {
               </div>
               <div className="text-xs text-white/60 card-copy">{p.desc}</div>
               <div className="flex-1" />
-              {!p.muted && (
-                <a href="#/inscripcion"
-                   className={p.highlight ? 'btn-cta !text-sm !py-3' : 'btn-ghost !text-sm !py-3'}>
-                  {p.highlight ? 'Comprar ahora' : 'Comprar'}
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </a>
-              )}
+              <a href={p.href}
+                 className={p.highlight ? 'btn-cta !text-sm !py-3' : 'btn-ghost !text-sm !py-3'}>
+                {p.highlight ? 'Comprar ahora' : 'Comprar'}
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
             </div>
           ))}
         </div>

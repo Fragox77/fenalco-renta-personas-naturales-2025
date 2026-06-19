@@ -28,8 +28,7 @@ export const CORPORATIVO_MIN = 3;
 
 export function calcularTarifa({ esAfiliado, participantes }) {
   if (esAfiliado && participantes >= CORPORATIVO_MIN) return TARIFAS.corporativo;
-  if (esAfiliado) return TARIFAS.afiliado;
-  return TARIFAS.particular;
+  return TARIFAS.full;
 }
 
 export function fmtCOP(n) {

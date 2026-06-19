@@ -15,7 +15,7 @@ export default function CTA() {
 
           <div className="relative grid lg:grid-cols-[1.4fr_auto] gap-10 items-center">
             <div>
-              <span className="deadline"><span className="pulse" />ÚLTIMOS DÍAS DE PREVENTA</span>
+              <span className="deadline"><span className="pulse" />ÚLTIMOS CUPOS DISPONIBLES</span>
               <h2 className="h-display text-white mt-5"
                   style={{ fontSize: 'clamp(40px, 6vw, 64px)' }}>
                 Actualízate antes<br />del <span className="grad-text">vencimiento.</span>
